@@ -1,0 +1,44 @@
+﻿@{
+    ViewData["Title"] = "ContactCategory_list";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+@model AddressBook1.Areas.MST_ContactCategory.Models.MST_ContactCategoryModel
+<div class="row">
+    <div class="col-md-12">
+        <h4>@TempData["ContactCategoryInsertMsg"]</h4>
+        <form method="post" asp-controller="MST_ContactCategory" asp-action="save" enctype="multipart/form-data">
+            @Html.HiddenFor(x=>x.ContactCategoryID)
+            @Html.HiddenFor(x=>x.PhotoPath)
+            <div class="form-group">
+                <label><span class="text-danger">*</span>ContactCategory Name</label>
+                <input type="text" class="form-control" asp-for="ContactCategoryName" placeholder="Enter ContactCategory Name" />
+                <span asp-validation-for="ContactCategoryName" class="text-danger"></span>
+            </div>
+             <div class="form-group">
+                <label><span class="text-danger">*</span>ContactCategory Relation</label>
+                <input type="nvarchar" class="form-control" asp-for="ContactCategoryRelation" placeholder="Enter ContactCategory Relation" />
+                <span asp-validation-for="ContactCategoryRelation" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label><span class="text-danger">*</span>PhotoPath</label>
+                <input type="file" class="form-control" asp-for="File" placeholder="Upload File" />
+            </div>
+@*             <div class="form-group">
+                <label>Creation Date</label>
+                <input type="date" class="form-control" asp-for="CreationDate"/>
+            </div>
+             <div class="form-group">
+                <label>Modification Date</label>
+                <input type="date" class="form-control" asp-for="ModificationDate"/>
+            </div>*@
+            <hr/>
+            <div>
+                <input type="submit" class="btn btn-success"/>
+            </div>
+        </form>
+    </div>
+</div>
+<div>
+    <a asp-controller="MST_ContactCategory" asp-action="Index" class="btn btn-danger">Cancel</a>
+</div>

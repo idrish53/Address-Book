@@ -1,0 +1,133 @@
+﻿@{
+    ViewData["Title"] = "CON_Contact_list";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+@using System.Data
+@model DataTable
+
+<div class="col-md-12">
+    <div class="row">
+        <div class="col-md-10">
+            <h3>Contact list</h3>
+        </div>
+        <div class="col-md-2">
+            <a asp-area="CON_Contact" asp-controller="CON_Contact" asp-action="ADD" class="btn green btn-rounded"><i class="fa fa-plus"></i>ADD Contact</a>
+        </div>
+    </div>
+</div>
+<div class="portlet-body">
+<div class="pull-right">
+    <div id="sample_1_filter" class="dataTables_filter">
+            <label>Search:<input type="text" class="form-control input-sm input-small input-inline" placeholder="" id="sample_1"></label>
+    </div>
+</div>
+</div>
+<div>
+    <form method="post" asp-area="CON_Contact" asp-controller="CON_Contact" asp-action="Search">
+        <label>Filter: </label>
+        <input type="search" name="CountryName" class="form-control input-sm input-small input-inline" placeholder="Country Name" value="" />
+        <input type="search" name="StateName" class="form-control input-sm input-small input-inline" placeholder="State Name" value="" />
+        <input type="search" name="CityName" class="form-control input-sm input-small input-inline" placeholder="City Name" value="" />
+        <input type="search" name="ContactName" class="form-control input-sm input-small input-inline" placeholder="Contact Name" value="" />
+        <input type="search" name="ContactAddress" class="form-control input-sm input-small input-inline" placeholder="Contact Address" value="" />
+        <input type="search" name="PinCode" class="form-control input-sm input-small input-inline" placeholder="PinCode" value="" />
+        <button type="submit" class="btn btn-sm btn-success">Search</button>
+    </form>
+</div>
+<hr />
+
+<table class="table table-responsive table-sm">
+    <thead>
+        <tr>
+@*            <th>ContactID</th>*@
+            <th>CountryName</th>
+            <th>StateName</th>
+            <th>CityName</th>
+            <th>ContactName</th>
+            <th>ContactAddress</th>
+@*            <th>CountryID</th>*@
+@*            <th>StateID</th>*@
+@*            <th>CityID</th>*@
+            <th>PinCode</th>
+            <th>Mobile</th>
+            <th>AlternateContact</th>
+            <th>Email</th>
+            <th>Birthdate</th>
+            <th>AnniversaryDate</th>
+            <th>LinkedIn</th>
+            <th>Twitter</th>
+            <th>Insta</th>
+            <th>TypeOfProfesison</th>
+            <th>CompanyName</th>
+            <th>Designation</th>
+            <th>CreationDate</th>
+            <th>ModificationDate</th>
+            <th>Photo</th>
+            <th>Action</th>
+        </tr>
+    </thead>
+    <tbody id="sample_2">
+        @foreach (DataRow dr in Model.Rows)
+        {
+            <tr>
+@*                <td>@dr["ContactID"]</td>*@
+                <td>@dr["CountryName"]</td>
+                <td>@dr["StateName"]</td>
+                <td>@dr["CityName"]</td>
+                <td>@dr["ContactName"]</td>
+                <td>@dr["ContactAddress"]</td>
+@*                <td>@dr["CountryID"]</td>*@
+@*                <td>@dr["StateID"]</td>*@
+@*                <td>@dr["CityID"]</td>*@
+                <td>@dr["PinCode"]</td>
+                <td>@dr["Mobile"]</td>
+                <td>@dr["AlternateContact"]</td>
+                <td>@dr["Email"]</td>
+                <td>@Convert.ToDateTime(dr["Birthdate"]).ToString("dd-MM-yyyy")</td>
+                <td>@Convert.ToDateTime(dr["AnniversaryDate"]).ToString("dd-MM-yyyy")</td>
+                <td>@dr["LinkedIn"]</td>
+                <td>@dr["Twitter"]</td>
+                <td>@dr["Insta"]</td>
+                <td>@dr["TypeOfProfesison"]</td>
+                <td>@dr["CompanyName"]</td>
+                <td>@dr["Designation"]</td>
+                <td>@Convert.ToDateTime(dr["CreationDate"]).ToString("dd-MM-yyyy")</td>
+                <td>@Convert.ToDateTime(dr["ModificationDate"]).ToString("dd-MM-yyyy")</td>
+                <td><img src="@Url.Content(dr["PhotoPath"].ToString())" style="height:auto;width:100px"></td>
+                <td>
+                    <form method="post" asp-area="CON_Contact" asp-controller="CON_Contact" asp-action="Delete">
+                    <input type="hidden" name="ContactID" value="@Convert.ToInt32(dr["ContactID"]).ToString()"/>
+                        <button type="submit" class="btn btn-danger" onclick='return deletefunction()'><i class="fa fa-close"></i></button>
+                        <a class="btn btn-info" asp-area="CON_Contact" asp-controller="CON_Contact" asp-action="ADD" asp-route-ContactID="@Convert.ToInt32(dr["ContactID"])"><i class="fa fa-edit"></i></a>
+                    </form>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
+
+@section Scripts
+{
+    <script>
+        $(document).ready(function () {
+            $("#sample_1").on("Keyup", function () {
+                var value = $(this).val().toLowerCase();
+                $("#sample_2 tr").filter(function () {
+                    $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
+                });
+            });
+        });
+        function deletefunction() 
+        {
+            if (confirm("Are you sure you want to delete?"))
+            {
+                return true;
+            }
+            else 
+            {
+                return false;
+            }
+        }
+    </script>
+}

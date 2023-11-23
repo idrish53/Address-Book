@@ -1,0 +1,89 @@
+﻿@{
+    ViewData["Title"] = "Country_list";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+@model AddressBook1.Areas.LOC_Country.Models.LOC_CountryModel
+
+<div class="row">
+    <div class="col-md-12">
+        <h4>@TempData["CountryInsertMsg"]</h4>
+        <form method="post" asp-controller="LOC_Country" asp-action="save" enctype="multipart/form-data">
+            @Html.HiddenFor(x=>x.CountryID)
+            @Html.HiddenFor(x=>x.PhotoPath)
+            <div class="form-group">
+                <label><span class="text-danger">*</span>Country Name</label>
+                <input type="text" class="form-control" asp-for="CountryName" placeholder="Enter Country Name" />
+                <span asp-validation-for="CountryName" class="text-danger"></span>
+            </div>
+             <div class="form-group">
+                <label><span class="text-danger">*</span>Country Code</label>
+                <input type="int"  class="form-control" asp-for="CountryCode" placeholder="Enter Country Code"/>
+                <span asp-validation-for="CountryCode" class="text-danger"></span>
+            </div>
+                 @if (ViewBag.EditImageURL != null)
+                 {
+                    <td><img id="blah" src="@Url.Content(ViewBag.EditImageURL)" style="width:50px;height:50px;border-radius:40px" /></td>
+                 }   
+            <div class="form-group">
+                <label><span class="text-danger">*</span>PhotoPath</label>
+                <input type="file"  class="form-control" asp-for="File" placeholder="Upload File"/>
+            </div>
+
+
+ @*            <div class="form-group">
+                <label>Creation Date</label>
+                <input type="date" class="form-control" asp-for="CreationDate"/>
+            </div>
+             <div class="form-group">
+                <label>Modification Date</label>
+                <input type="date" class="form-control" asp-for="ModificationDate"/>
+            </div>*@
+            <hr/>
+            <div>
+                <input type="submit" class="btn btn-success"/>
+            </div>
+        </form>
+    </div>
+</div>
+<div>
+    <a asp-controller="LOC_Country" asp-action="Index" class="btn btn-danger">Cancel</a>
+</div>
+
+@*@section Scripts{
+    @{
+        await Html.RenderPartialAsync("__ValidationScriptsPartial");
+    }
+}
+*@
+
+@*changes are made from here*@
+<script>
+    function sweetalert() {
+        Swal.fire({
+            title: 'Do you want to save the changes?',
+            showDenyButton: true,
+            showCancelButton: true,
+            confirmButtonText: 'Save',
+            denyButtonText: `Don't save`,
+        }).then((result) => {
+            /* Read more about isConfirmed, isDenied below */
+            if (result.isConfirmed) {
+                Swal.fire('Saved!', '', 'success')
+            } else if (result.isDenied) {
+                Swal.fire('Changes are not saved', '', 'info')
+            }
+        })
+        A custom positioned dialog
+
+        Try me!
+    }
+
+    function FileUPT.onchange = evt => {
+        const [file] = FileUPT.files
+        if (file) {
+            blah.src = URL.createObjectURL(file);
+        }
+    }
+        //setInterval(sweetalert, 888500);
+</script>
